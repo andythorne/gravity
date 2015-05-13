@@ -114,3 +114,9 @@ services:
     class: Gravity\NodeBundle\Field\Text\Widget\Formatted\FormattedWidget
     tags:
       - { name: gravity.field.widget }
+
+
+  #
+  # Content Type Repository
+  gravity_node.content_type_repository:
+    class: Gravity\NodeBundle\Structure\Repository\ContentTypeRepository
