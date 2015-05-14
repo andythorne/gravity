@@ -3,6 +3,7 @@
 namespace Gravity\NodeBundle\Field\Text\Widget\UnFormatted;
 
 use Gravity\NodeBundle\Field\Text\Widget\UnFormatted\Configuration\UnFormattedWidgetConfiguration;
+use GravityCMS\Component\Field\FieldReference;
 use GravityCMS\CoreBundle\Entity\Field;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,16 +22,16 @@ class UnFormattedWidgetForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Field $field */
+        /** @var FieldReference $field */
         $field = $options['field'];
-        $limit = $field->getConfig()->getLimit();
+        $limit = $field->getSettings()['limit'];
         /** @var UnFormattedWidgetConfiguration $widgetConfig */
-        $widgetConfig = $field->getWidget()->getConfig();
+        $widgetConfig = $field->getWidget()->getSettings();
 
-        if($widgetConfig->isMultiLine()){
+        if($widgetConfig['multiline']){
             $builder
                 ->add('body', 'textarea', [
-                    'label' => $limit == 1 ? $field->getLabel() : false,
+                    'label' => $limit == 1 ? $field->getName() : false,
                     'attr'  => [
                         'class'      => 'form-control',
                         'data-limit' => $limit,
@@ -39,7 +40,7 @@ class UnFormattedWidgetForm extends AbstractType
         } else {
             $builder
                 ->add('body', 'text', [
-                    'label' => $limit == 1 ? $field->getLabel() : false,
+                    'label' => $limit == 1 ? $field->getName() : false,
                     'attr'  => [
                         'class'      => 'form-control',
                         'data-limit' => $limit,

@@ -5,9 +5,8 @@ namespace Gravity\NodeBundle\Field\Text\Widget\Formatted;
 use Gravity\NodeBundle\Entity\FieldText;
 use Gravity\NodeBundle\Field\Text\Widget\Formatted\Asset\FormattedWidgetLibrary;
 use Gravity\NodeBundle\Field\Text\Widget\Formatted\Configuration\FormattedWidgetConfiguration;
-use GravityCMS\Component\Field\FieldInterface;
-use GravityCMS\Component\Field\Widget\AbstractWidget;
-use GravityCMS\Component\Field\Widget\WidgetSettingsInterface;
+use GravityCMS\Component\Field\FieldDefinitionInterface;
+use GravityCMS\Component\Field\Widget\AbstractWidgetDefinition;
 
 /**
  * Class FormattedWidget
@@ -15,7 +14,7 @@ use GravityCMS\Component\Field\Widget\WidgetSettingsInterface;
  * @package Gravity\NodeBundle\Field\Text\Widget
  * @author  Andy Thorne <contrabandvr@gmail.com>
  */
-class FormattedWidget extends AbstractWidget
+class FormattedWidget extends AbstractWidgetDefinition
 {
     /**
      * {@inheritdoc}
@@ -41,14 +40,6 @@ class FormattedWidget extends AbstractWidget
         return 'WYSIWYG editor for formatted text';
     }
 
-    /**
-     * @return WidgetSettingsInterface
-     */
-    protected function getDefaultSettings()
-    {
-        return new FormattedWidgetConfiguration();
-    }
-
     public function getForm()
     {
         return new FormattedWidgetForm();
@@ -69,21 +60,12 @@ class FormattedWidget extends AbstractWidget
     /**
      * Checks if this widget supports the given field
      *
-     * @param FieldInterface $field
+     * @param FieldDefinitionInterface $field
      *
      * @return string
      */
-    public function supportsField(FieldInterface $field)
+    public function supportsField(FieldDefinitionInterface $field)
     {
         return ($field->getName() === 'text');
-    }
-
-    /**
-     * @param FieldText                  $entity
-     * @param WidgetSettingsInterface $configuration
-     */
-    public function setDefaults($entity, WidgetSettingsInterface $configuration)
-    {
-        $entity->setBody($configuration->getDefault());
     }
 }

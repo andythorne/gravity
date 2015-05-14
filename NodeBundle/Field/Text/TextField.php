@@ -3,13 +3,13 @@
 namespace Gravity\NodeBundle\Field\Text;
 
 use Gravity\NodeBundle\Field\Text\Widget\Formatted\FormattedWidget;
-use GravityCMS\Component\Field\AbstractField;
+use GravityCMS\Component\Field\AbstractFieldDefinition;
 use GravityCMS\Component\Field\Display\DisplayInterface;
-use GravityCMS\Component\Field\Widget\WidgetInterface;
+use GravityCMS\Component\Field\Widget\WidgetDefinitionInterface;
 use Gravity\NodeBundle\Field\Text\Configuration\TextFieldConfiguration;
 use Gravity\NodeBundle\Field\Text\Display\TextFieldDisplay;
 
-class TextField extends AbstractField
+class TextField extends AbstractFieldDefinition
 {
     protected $widget;
 
@@ -46,7 +46,7 @@ class TextField extends AbstractField
     }
 
     /**
-     * @return WidgetInterface
+     * @return WidgetDefinitionInterface
      */
     public function getDefaultWidget()
     {

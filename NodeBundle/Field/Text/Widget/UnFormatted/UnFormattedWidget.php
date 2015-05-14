@@ -4,10 +4,9 @@ namespace Gravity\NodeBundle\Field\Text\Widget\UnFormatted;
 
 use Gravity\NodeBundle\Entity\FieldText;
 use Gravity\NodeBundle\Field\Text\Widget\UnFormatted\Asset\UnFormattedWidgetLibrary;
-use Gravity\NodeBundle\Field\Text\Widget\UnFormatted\Configuration\UnFormattedWidgetConfiguration;
-use GravityCMS\Component\Field\FieldInterface;
-use GravityCMS\Component\Field\Widget\AbstractWidget;
-use GravityCMS\Component\Field\Widget\WidgetSettingsInterface;
+use GravityCMS\Component\Field\FieldDefinitionInterface;
+use GravityCMS\Component\Field\Widget\AbstractWidgetDefinition;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UnFormattedWidget
@@ -15,7 +14,7 @@ use GravityCMS\Component\Field\Widget\WidgetSettingsInterface;
  * @package Gravity\NodeBundle\Field\Text\Widget
  * @author  Andy Thorne <contrabandvr@gmail.com>
  */
-class UnFormattedWidget extends AbstractWidget
+class UnFormattedWidget extends AbstractWidgetDefinition
 {
     /**
      * {@inheritdoc}
@@ -42,23 +41,24 @@ class UnFormattedWidget extends AbstractWidget
     }
 
     /**
-     * @return WidgetSettingsInterface
+     * {@inheritdoc}
      */
-    protected function getDefaultSettings()
-    {
-        return new UnFormattedWidgetConfiguration();
-    }
-
     public function getForm()
     {
         return new UnFormattedWidgetForm();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEntityClass()
     {
         return 'Gravity\NodeBundle\Entity\FieldText';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAssetLibraries()
     {
         return [
@@ -67,19 +67,32 @@ class UnFormattedWidget extends AbstractWidget
     }
 
     /**
-     * Checks if this widget supports the given field
-     *
-     * @param FieldInterface $field
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function supportsField(FieldInterface $field)
+    public function supportsField(FieldDefinitionInterface $field)
     {
         return ($field->getName() === 'text');
     }
 
     /**
-     * @param FieldText                  $entity
+     * {@inheritdoc}
+     */
+    public function setOptions(OptionsResolver $optionsResolver)
+    {
+        $optionsResolver->setDefaults(
+            [
+                'multiline' => false
+            ]
+        );
+        $optionsResolver->setAllowedTypes(
+            [
+                'multiline' => 'bool'
+            ]
+        );
+    }
+
+    /**
+     * @param FieldText               $entity
      * @param WidgetSettingsInterface $configuration
      */
     public function setDefaults($entity, WidgetSettingsInterface $configuration)
